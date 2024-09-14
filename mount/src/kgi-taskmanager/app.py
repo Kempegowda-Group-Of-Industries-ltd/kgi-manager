@@ -1,35 +1,42 @@
+import streamlit as st
 import pandas as pd
-import os
 from datetime import datetime
+from task_manager import load_tasks, save_task, update_task, delete_task
+from local_calendar import view_calendar, add_event_to_calendar
 
-# Directory and file path
-DIRECTORY = "data"
-FILE_PATH = os.path.join(DIRECTORY, "tasks.csv")
+def main():
+    st.set_page_config(page_title="KGI Task Manager", layout="wide")
+    st.title("KGI Task Manager")
 
-# Load tasks from CSV
-def load_tasks():
-    if not os.path.exists(FILE_PATH):
-        return pd.DataFrame(columns=["Name", "Priority", "Due", "Category", "Progress", "Recurrence", "Dependencies", "Tags"])
-    return pd.read_csv(FILE_PATH)
+    menu = ["Add Task", "View Tasks", "Update Task", "Delete Task", "Calendar"]
+    choice = st.sidebar.selectbox("Select an option", menu)
 
-# Save a new task to CSV
-def save_task(task_data):
-    tasks = load_tasks()
-    new_task = pd.DataFrame([task_data])
-    tasks = pd.concat([tasks, new_task], ignore_index=True)
-    tasks.to_csv(FILE_PATH, index=False)
+    if choice == "Add Task":
+        st.subheader("Add New Task")
+        name = st.text_input("Task Name")
+        if st.button("Add Task"):
+            st.write(f"Task '{name}' added!")  # For testing
 
-# Update an existing task
-def update_task(task_name, updates):
-    tasks = load_tasks()
-    for key, value in updates.items():
-        tasks.loc[tasks["Name"] == task_name, key] = value
-    tasks.to_csv(FILE_PATH, index=False)
+    elif choice == "View Tasks":
+        st.subheader("View All Tasks")
+        tasks = load_tasks()
+        st.write(tasks)
 
-# Delete a task from the CSV file
-def delete_task(task_name):
-    tasks = load_tasks()
-    tasks = tasks[tasks["Name"] != task_name]
-    tasks.to_csv(FILE_PATH, index=False)
+    elif choice == "Update Task":
+        st.subheader("Update Existing Task")
+        name = st.text_input("Task Name to Update")
+        if st.button("Update Task"):
+            st.write(f"Updating task '{name}'")  # For testing
 
-# Additional functions for new features can be added here
+    elif choice == "Delete Task":
+        st.subheader("Delete Task")
+        name = st.text_input("Task Name to Delete")
+        if st.button("Delete Task"):
+            st.write(f"Deleting task '{name}'")  # For testing
+
+    elif choice == "Calendar":
+        st.subheader("Local Calendar")
+        view_calendar()
+
+if __name__ == "__main__":
+    main()
