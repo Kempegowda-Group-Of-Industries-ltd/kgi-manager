@@ -1,5 +1,8 @@
 import streamlit as st  # Import Streamlit
+import matplotlib.pyplot as plt
+import seaborn as sns
 from datetime import datetime, timedelta
+import io
 
 def generate_report(tasks):
     st.subheader("Analytics Report")
@@ -19,9 +22,13 @@ def generate_report(tasks):
     for task in tasks:
         priority_counts[task['priority']] += 1
 
-    st.write("Breakdown by Priority:")
-    for priority, count in priority_counts.items():
-        st.write(f"{priority}: {count} tasks")
+    # Plot Breakdown by Priority
+    fig, ax = plt.subplots()
+    sns.barplot(x=list(priority_counts.keys()), y=list(priority_counts.values()), ax=ax)
+    ax.set_title("Breakdown by Priority")
+    ax.set_xlabel("Priority")
+    ax.set_ylabel("Number of Tasks")
+    st.pyplot(fig)
 
     # Tasks Due in the Next 7 Days
     today = datetime.now().date()
@@ -40,7 +47,21 @@ def generate_report(tasks):
             category_tag_counts[cat] = category_tag_counts.get(cat, 0) + 1
         for tag in tags:
             category_tag_counts[tag] = category_tag_counts.get(tag, 0) + 1
-    
-    st.write("Number of Tasks per Category/Tag:")
-    for category_tag, count in category_tag_counts.items():
-        st.write(f"{category_tag}: {count} tasks")
+
+    # Plot Number of Tasks per Category/Tag
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(x=list(category_tag_counts.keys()), y=list(category_tag_counts.values()), ax=ax)
+    ax.set_title("Number of Tasks per Category/Tag")
+    ax.set_xlabel("Category/Tag")
+    ax.set_ylabel("Number of Tasks")
+    plt.xticks(rotation=45, ha="right")
+    st.pyplot(fig)
+
+    # Plot Tasks Due in the Next 7 Days (Pie Chart)
+    upcoming_due_dates = [datetime.strptime(task['due_date'], '%Y-%m-%d').date() for task in upcoming_tasks]
+    due_dates_count = {date: upcoming_due_dates.count(date) for date in set(upcoming_due_dates)}
+
+    fig, ax = plt.subplots()
+    ax.pie(due_dates_count.values(), labels=[str(date) for date in due_dates_count.keys()], autopct='%1.1f%%', startangle=140)
+    ax.set_title("Distribution of Tasks Due in the Next 7 Days")
+    st.pyplot(fig)
