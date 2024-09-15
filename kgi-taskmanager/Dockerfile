@@ -1,4 +1,3 @@
-# Use the official Python 3.12 slim image as the base
 FROM python:3.12-slim
 
 # Install system dependencies including D-Bus and Xvfb
