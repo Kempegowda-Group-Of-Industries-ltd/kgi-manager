@@ -1,21 +1,25 @@
 import streamlit as st
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
+# File path for storing tasks
 TASK_DATA_PATH = 'data/tasks.json'
 
 def load_tasks(file_path):
+    """Load tasks from a JSON file."""
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
             return json.load(file)
     return []
 
 def save_tasks(file_path, tasks):
+    """Save tasks to a JSON file."""
     with open(file_path, 'w') as file:
         json.dump(tasks, file, indent=4)
 
 def add_task(tasks):
+    """Add a new task to the task list."""
     st.sidebar.subheader("Add Task")
     
     task_name = st.sidebar.text_input("Task Name", key="add_task_name")
@@ -37,6 +41,7 @@ def add_task(tasks):
             st.sidebar.error("Task name cannot be empty!")
 
 def edit_task(tasks):
+    """Edit an existing task."""
     st.sidebar.subheader("Edit Task")
     
     selected_task = st.sidebar.selectbox("Select Task to Edit", [task['name'] for task in tasks], key="edit_task_selectbox")
@@ -56,6 +61,7 @@ def edit_task(tasks):
             st.sidebar.success("Task updated successfully!")
 
 def delete_task(tasks):
+    """Delete a task from the task list."""
     st.sidebar.subheader("Delete Task")
     
     selected_task = st.sidebar.selectbox("Select Task to Delete", [task['name'] for task in tasks], key="delete_task_selectbox")
@@ -67,6 +73,7 @@ def delete_task(tasks):
     return tasks
 
 def handle_recurring_tasks(tasks):
+    """Handle recurring tasks by updating their due dates."""
     updated_tasks = []
     today = datetime.now().date()
 
@@ -93,6 +100,7 @@ def handle_recurring_tasks(tasks):
     return updated_tasks
 
 def filter_by_category_tag(tasks, category_tag):
+    """Filter tasks by category or tag."""
     filtered_tasks = []
     for task in tasks:
         categories = task.get('categories', [])
@@ -102,5 +110,5 @@ def filter_by_category_tag(tasks, category_tag):
     return filtered_tasks
 
 def send_notification(task_name, due_date):
+    """Send a notification for a task."""
     st.sidebar.write(f"Reminder: Task '{task_name}' is due on {due_date}")
-
