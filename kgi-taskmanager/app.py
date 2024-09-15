@@ -18,7 +18,7 @@ def main():
     st.title("KGI Task Manager 📝")
 
     # Load tasks from file
-    tasks = load_tasks(TASK_DATA_PATH)
+    tasks = load_tasks(data/tasks.json)
 
     # Sidebar navigation
     st.sidebar.title("Navigation")
@@ -40,7 +40,7 @@ def main():
         edit_task(tasks)
         tasks = delete_task(tasks)
         tasks = handle_recurring_tasks(tasks)
-        save_tasks(TASK_DATA_PATH, tasks)
+        save_tasks(data/tasks.json, tasks)
 
         # Task Categories/Tags Filtering
         if st.sidebar.checkbox("Filter by Category/Tag"):
