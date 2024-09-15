@@ -7,3 +7,5 @@ plotly
 schedule
 jsonschema
 python-dateutil
+
+seaborn
