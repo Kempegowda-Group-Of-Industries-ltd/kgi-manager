@@ -1,0 +1,12 @@
+{
+    "total_tasks": 10,
+    "completed_tasks": 6,
+    "pending_tasks": 4,
+    "most_frequent_tag": "Work",
+    "time_spent": {
+        "2024-09-10": 2,
+        "2024-09-11": 1.5,
+        "2024-09-12": 3,
+        "2024-09-13": 2.5
+    }
+}
