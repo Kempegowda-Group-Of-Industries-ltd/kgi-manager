@@ -9,3 +9,5 @@ jsonschema
 python-dateutil
 
 seaborn
+dbus
+xvfb
