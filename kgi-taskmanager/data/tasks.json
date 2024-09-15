@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "Complete project documentation",
+        "description": "Finish the readme file and other documentation for the KGI Task Manager",
+        "priority": "High",
+        "due_date": "2024-09-20",
+        "status": "Pending"
+    },
+    {
+        "id": 2,
+        "title": "Review team feedback",
+        "description": "Go through the feedback given by the team on the app features",
+        "priority": "Medium",
+        "due_date": "2024-09-18",
+        "status": "Pending"
+    }
+]
