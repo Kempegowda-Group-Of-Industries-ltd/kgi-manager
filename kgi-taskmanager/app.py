@@ -11,40 +11,6 @@ import os
 # Define the path to the tasks data file
 TASK_DATA_PATH = os.path.join("data", "tasks.json")
 
-import streamlit as st
-
-# Load the CSS file
-def load_css():
-    with open("templates/dark_mode.css") as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-def main():
-    # Load CSS
-    load_css()
-
-    st.title("KGI Task Manager App")
-    
-    # Your app code here
-    app_mode = st.sidebar.selectbox("Select App Mode", ["Task Manager", "Calendar", "Analytics", "Rewards"])
-
-    if app_mode == "Task Manager":
-        st.sidebar.subheader("Task Operations")
-        # Call your functions for adding, editing, deleting tasks, etc.
-
-    elif app_mode == "Calendar":
-        # Call your function to display calendar view
-        pass
-
-    elif app_mode == "Analytics":
-        # Call your function to generate report
-        pass
-
-    elif app_mode == "Rewards":
-        # Call your function for tracking achievements
-        pass
-
-if __name__ == "__main__":
-    main()
 
 def main():
     # Ensure the data directory exists
