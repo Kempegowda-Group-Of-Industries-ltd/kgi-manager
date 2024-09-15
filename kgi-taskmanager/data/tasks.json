@@ -1,18 +1,43 @@
-[
+import json
+import os
+
+# Path to the tasks data
+TASK_DATA_PATH = "data/tasks.json"
+
+# Create the data directory if it does not exist
+if not os.path.exists("data"):
+    os.makedirs("data")
+
+# Create an empty tasks.json file
+if not os.path.exists(TASK_DATA_PATH):
+    with open(TASK_DATA_PATH, 'w') as file:
+        json.dump([], file, indent=4)
+
+
+
+
+# Sample tasks
+sample_tasks = [
     {
-        "id": 1,
-        "title": "Complete project documentation",
-        "description": "Finish the readme file and other documentation for the KGI Task Manager",
+        "name": "Buy groceries",
         "priority": "High",
         "due_date": "2024-09-20",
-        "status": "Pending"
+        "recurring": "None",
+        "completed": False
     },
     {
-        "id": 2,
-        "title": "Review team feedback",
-        "description": "Go through the feedback given by the team on the app features",
+        "name": "Complete project report",
         "priority": "Medium",
-        "due_date": "2024-09-18",
-        "status": "Pending"
+        "due_date": "2024-09-25",
+        "recurring": "None",
+        "completed": False
+    },
+    {
+        "name": "Call the bank",
+        "priority": "Low",
+        "due_date": "2024-09-30",
+        "recurring": "None",
+        "completed": False
     }
 ]
+
