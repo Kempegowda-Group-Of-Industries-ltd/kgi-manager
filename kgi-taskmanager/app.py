@@ -1,25 +1,24 @@
 import streamlit as st
 from task_manager import load_tasks, save_tasks, add_task, edit_task, delete_task
 from recurring_tasks import handle_recurring_tasks
-from categories_tags import add_category_tag, filter_by_category_tag
+from categories_tags import filter_by_category_tag
 from calendar_view import display_calendar
 from analytics_reports import generate_report
 from rewards_achievements import track_achievements
 from notifications import send_notification
-from datetime import datetime, timedelta
 import os
 
 # Define the path to the tasks data file
 TASK_DATA_PATH = os.path.join("data", "tasks.json")
 
-# Ensure the data directory exists
-if not os.path.exists("data"):
-    os.makedirs("data")
-
-# Load and save task functions
-tasks = load_tasks(TASK_DATA_PATH)
-
 def main():
+    # Ensure the data directory exists
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
+    # Load tasks from file
+    tasks = load_tasks(TASK_DATA_PATH)
+    
     st.set_page_config(page_title="KGI Task Manager", layout="wide")
     st.title("KGI Task Manager 📝")
     
@@ -32,7 +31,7 @@ def main():
         st.sidebar.subheader("Task Operations")
         add_task(tasks)
         edit_task(tasks)
-        delete_task(tasks)
+        tasks = delete_task(tasks)
         tasks = handle_recurring_tasks(tasks)
         save_tasks(TASK_DATA_PATH, tasks)
 
